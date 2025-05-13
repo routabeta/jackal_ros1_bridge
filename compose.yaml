@@ -1,0 +1,13 @@
+services:
+  bridge_ctr:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: bridge_img
+    network_mode: host
+    ipc: host
+    stdin_open: true
+    tty: true
+    extra_hosts:
+      - "xavieragx:10.42.0.7"
+
