@@ -1,0 +1,12 @@
+# ROS build artifacts
+build/
+install/
+log/
+devel/
+
+# Pycache
+__pycache__/
+*.pyc
+
+# VSCode
+.vscode/

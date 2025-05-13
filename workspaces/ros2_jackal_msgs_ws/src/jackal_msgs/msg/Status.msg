@@ -1,0 +1,16 @@
+std_msgs/Header header
+string hardware_id
+builtin_interfaces/Duration mcu_uptime
+builtin_interfaces/Duration connection_uptime
+bool drivers_active
+bool driver_external_stop_present
+bool driver_external_stop_stopped
+float32 measured_battery
+float32 measured_12v
+float32 measured_5v
+float32 drive_current
+float32 user_current
+float32 computer_current
+float32 total_current
+float32 total_current_peak
+float64 total_power_consumed     

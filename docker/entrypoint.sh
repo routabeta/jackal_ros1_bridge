@@ -1,34 +1,40 @@
 #!/bin/bash
 set -e
 
-# Note this path after COPY in Dockerfile
-WORKSPACE_PATH=/workspaces/ros1_bridge_ws
+# 1. Build ROS 1 workspace (ROS 1 only)
+(
+	source ${ROS1_INSTALL_PATH}/setup.bash
+	cd /workspaces/ros1_jackal_msgs_ws
+	catkin_make_isolated --install || {
+		echo "[ENTRYPOINT] Failed to build ros1_jackal_msgs_ws"
+		exit 1
+	}
+)
 
-# Source ROS 2
-source ${ROS2_INSTALL_PATH}/setup.bash || {
-	echo "[ENTRYPOINT] Failed to source ROS 2 $ROS2_DISTRO"
-	exit 1
-}
 
-# Build all except ros1_bridge
-cd $WORKSPACE_PATH
-rosdep install --from-paths src --ignore-src -r -y
-colcon build --symlink-install --packages-skip ros1_bridge || {
-	echo "[ENTRYPOINT] Failed to build all (non-ros1_bridge)"
-	exit 1
-}
+# 2. Build ROS 2 workspaces (ROS 2 only)
+(
+	source ${ROS2_INSTALL_PATH}/setup.bash
+	cd /workspaces/ros2_jackal_msgs_ws
+	colcon build --symlink-install --packages-select jackal_msgs || {
+		echo "[ENTRYPOINT] Failed to build ros2_jackal_msgs"
+		exit 1
+	}
+)
 
-# Source ROS 1
-source ${ROS1_INSTALL_PATH}/setup.bash || {
-	echo "[ENTRYPOINT] Failed to source ROS 1 $ROS1_DISTRO"
-	exit 1
-}
-
-# Build ros1_bridge
-colcon build --symlink-install --packages-select ros1_bridge --cmake-force-configure || {
-	echo "[ENTRYPOINT] Failed to build ros1_bridge"
-	exit 1
-}
+# 3. Build ros1_bridge (ROS 1 + ROS 2)
+(
+	source ${ROS1_INSTALL_PATH}/setup.bash
+	source ${ROS2_INSTALL_PATH}/setup.bash
+	source /workspaces/ros1_jackal_msgs_ws/install_isolated/setup.bash
+	source /workspaces/ros2_jackal_msgs_ws/install/local_setup.bash
+	
+	cd /workspaces/ros1_bridge_ws # Build bridge dir without bridge
+	colcon build --symlink-install --packages-select ros1_bridge --cmake-force-configure || {
+		echo "[ENTRYPOINT] Failed to build ros1_bridge"
+		exit 1
+	}
+)
 
 echo "[ENTRYPOINT] bridge built"
 exec /bin/bash
