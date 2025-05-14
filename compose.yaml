@@ -6,6 +6,10 @@ services:
     image: bridge_img
     network_mode: host
     ipc: host
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
     stdin_open: true
     tty: true
     extra_hosts:

@@ -29,7 +29,7 @@ set -e
 	source /workspaces/ros1_jackal_msgs_ws/install_isolated/setup.bash
 	source /workspaces/ros2_jackal_msgs_ws/install/local_setup.bash
 	
-	cd /workspaces/ros1_bridge_ws # Build bridge dir without bridge
+	cd /workspaces/ros1_bridge_ws # Build bridge
 	colcon build --symlink-install --packages-select ros1_bridge --cmake-force-configure || {
 		echo "[ENTRYPOINT] Failed to build ros1_bridge"
 		exit 1

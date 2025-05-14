@@ -1,0 +1,3 @@
+alias sourcefoxy='source ${ROS2_INSTALL_PATH}/setup.bash'
+alias sourcenoetic='source ${ROS1_INSTALL_PATH}/setup.bash'
+alias sourcebridge='source /workspaces/ros1_bridge_ws/install/setup.bash'

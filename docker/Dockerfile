@@ -6,6 +6,7 @@ ENV ROS1_INSTALL_PATH=/opt/ros/noetic
 ENV ROS2_DISTRO=foxy
 ENV ROS2_INSTALL_PATH=/opt/ros/foxy
 
+# Configured with static IPs on local network
 ENV ROS_MASTER_URI=http://10.42.0.7:11311
 ENV ROS_IP=10.42.0.50
 ENV ROS_DOMAIN_ID=0
@@ -39,7 +40,7 @@ RUN rosdep init || true && rosdep update
 
 # Change workspace and set up entrypoint
 WORKDIR /
-# COPY ./docker/bashrc /home/${USERNAME}/.bashrc
+COPY ./docker/bashrc /root/.bashrc
 COPY ./docker/entrypoint.sh /entrypoint.sh
 COPY ./workspaces /workspaces
 RUN chmod +x /entrypoint.sh
