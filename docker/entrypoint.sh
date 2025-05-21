@@ -20,6 +20,11 @@ set -e
 		echo "[ENTRYPOINT] Failed to build ros2_jackal_msgs"
 		exit 1
 	}
+	cd /workspaces/jackal_control_ros2_ws
+	colcon build --symlink-install --packages-select keyboard_control || {
+		echo "[ENTRYPOINT] Failed to build keyboard_control"
+		exit 1
+	}
 )
 
 # 3. Build ros1_bridge (ROS 1 + ROS 2)

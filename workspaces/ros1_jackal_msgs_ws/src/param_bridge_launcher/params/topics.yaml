@@ -1,0 +1,4 @@
+topics: [{topic: /cmd_vel, type: geometry_msgs/msg/Twist, queue_size: 15}, 
+  {topic: /status, type: jackal_msgs/msg/Status, queue_size: 100, bidirectional: false},
+  {topic: /rosout, type: rcl_interfaces/msg/Log, queue_size: 50, bidirectional: false},
+  {topic: /odom, type: nav_msgs/msg/Odometry, queue_size: 50, bidirectional: false}]

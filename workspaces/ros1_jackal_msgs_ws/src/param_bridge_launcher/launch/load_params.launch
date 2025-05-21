@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+    <rosparam file="/workspaces/ros1_jackal_msgs_ws/src/param_bridge_launcher/params/topics.yaml" command="load"/>
+</launch>
